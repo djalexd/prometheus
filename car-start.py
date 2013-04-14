@@ -27,7 +27,7 @@ def main():
 			gpio.setup(pin, gpio.OUT)
 		except gpio.InvalidChannelException:
 			# We throw a more detailed error.
-			raise gpio.InvalidChannelException("The channel sent is invalid on a Raspberry Pi: " + str(pin))
+			raise gpio.InvalidChannelException("The channel sent is invalid on a Raspberry Pi: %d" % pin)
 
 	print 'Finished configuring Raspberry motor pins'
 
