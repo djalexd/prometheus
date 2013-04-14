@@ -23,7 +23,12 @@ def main():
 	gpio.setmode(gpio.BOARD)
 	# configure pins - all are output
 	for pin in pins_list:
-		gpio.setup(pin, gpio.OUT)
+		try:
+			gpio.setup(pin, gpio.OUT)
+		except gpio.InvalidChannelException:
+			# We throw a more detailed error.
+			raise gpio.InvalidChannelException("The channel sent is invalid on a Raspberry Pi: " + pin)
+
 	print 'Finished configuring Raspberry motor pins'
 
 	# main loop -- we just handle input.
