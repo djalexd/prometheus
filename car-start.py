@@ -2,9 +2,9 @@
 
 # import some relevant modules
 import sys, time
-try
+try:
 	import RPi.GPIO as gpio
-except
+except ImportError:
 	print("Error importing RPi.GPIO; you are either running the script without sudo priviledges, or running the script on a machine that is not Raspberry (the lib is missing nevertheless)")
 
 # Set some constants; The most important ones are pin numbers
@@ -22,20 +22,20 @@ def main():
 	# configure gpio mode
 	gpio.setmode(gpio.BOARD)
 	# configure pins - all are output
-	for pin in pins_list
+	for pin in pins_list:
 		gpio.setup(pin, gpio.OUT)
 	print 'Finished configuring Raspberry motor pins'
 
 	# main loop -- we just handle input.
 	while True:
 		str = raw_input();
-		if str == "a"
+		if str == "a":
 			print 'going right'
-		elif str == "d"
+		elif str == "d":
 			print 'going left'
-		elif str == "w"
+		elif str == "w":
 			print 'forward!'
-		elif str == "s"
+		elif str == "s":
 			print 'brake..'
 
 		# sleeping for 1s ... hmm that's long
