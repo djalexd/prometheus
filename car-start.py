@@ -7,6 +7,8 @@ try:
 except ImportError:
 	print("Error importing RPi.GPIO; you are either running the script without sudo priviledges, or running the script on a machine that is not Raspberry (the lib is missing nevertheless)")
 
+import getch
+
 # Set some constants; The most important ones are pin numbers
 pi        = 3.14 # totally useless, but fun
 motor_d2  = 11   # d2 is motor driver's way to enable/disable both motors -- we'll set this to high for normal ops
@@ -16,6 +18,14 @@ back_pwm  = 12   # pin used to control back motor PWM
 back_dir  = 16   # pin used to control back motor direction (forward/backward)
 
 pins_list = [ motor_d2, front_pwr, front_dir, back_pwm, back_dir ]
+
+# Enable a preconfigured pin. 
+def enable(pin):
+	gpio.output(pin, gpio.HIGH)
+
+# Disable a preconfigured pin.
+def disable(pin):
+	gpio.output(pin, gpio.LOW)
 
 def main():
 	print 'Starting Raspberry motor input pins'
@@ -33,15 +43,18 @@ def main():
 
 	# main loop -- we just handle input.
 	while True:
-		str = raw_input();
-		if str == "a":
+		ch = getch()
+		if str == 'a':
 			print 'going right'
-		elif str == "d":
+		elif str == 'd':
 			print 'going left'
-		elif str == "w":
+		elif str == 'w':
 			print 'forward!'
-		elif str == "s":
+		elif str == 's':
 			print 'brake..'
+		else:
+			# reset all values (both pwm and dir)
+			print 'reseting everything'
 
 		# sleeping for 1s ... hmm that's long
 		time.sleep(1)
