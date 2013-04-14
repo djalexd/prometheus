@@ -10,10 +10,10 @@ except ImportError:
 # Set some constants; The most important ones are pin numbers
 pi        = 3.14 # totally useless, but fun
 motor_d2  = 11   # d2 is motor driver's way to enable/disable both motors -- we'll set this to high for normal ops
-front_pwr = 17   # pin used to power the front motor
-front_dir = 19   # pin used to control front motor direction (right/left)
+front_pwr = 18   # pin used to power the front motor
+front_dir = 15   # pin used to control front motor direction (right/left)
 back_pwm  = 12   # pin used to control back motor PWM
-back_dir  = 13   # pin used to control back motor direction (forward/backward)
+back_dir  = 16   # pin used to control back motor direction (forward/backward)
 
 pins_list = [ motor_d2, front_pwr, front_dir, back_pwm, back_dir ]
 
