@@ -37,12 +37,12 @@ class Car:
 	# Steer the front wheels to the left
 	def steer_left(self):
 		enable_pin(self.front_dir)
-		enable_pin(self.front_pwd)
+		enable_pin(self.front_pwr)
 
 	# Steer the front wheels to the right
 	def steer_right(self):
 		disable_pin(self.front_dir)
-		enable_pin(self.front_pwd)
+		enable_pin(self.front_pwr)
 
 	# Move the car forward
 	def go_forward(self):
