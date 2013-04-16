@@ -15,11 +15,11 @@ class Car:
 
 	# Default pins
 	def __init__(self):
-		motor_d2  = 11   # d2 is motor driver's way to enable/disable both motors -- we'll set this to high for normal ops
-		front_pwr = 18   # pin used to power the front motor
-		front_dir = 15   # pin used to control front motor direction (right/left)
-		back_pwm  = 12   # pin used to control back motor PWM
-		back_dir  = 16   # pin used to control back motor direction (forward/backward)		
+		self.motor_d2  = 11   # d2 is motor driver's way to enable/disable both motors -- we'll set this to high for normal ops
+		self.front_pwr = 18   # pin used to power the front motor
+		self.front_dir = 15   # pin used to control front motor direction (right/left)
+		self.back_pwm  = 12   # pin used to control back motor PWM
+		self.back_dir  = 16   # pin used to control back motor direction (forward/backward)		
 		self.configure()
 
 	# Configure gpio pins as output
