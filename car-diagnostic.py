@@ -7,8 +7,7 @@ try:
 except ImportError:
 	print("Error importing RPi.GPIO; you are either running the script without sudo priviledges, or running the script on a machine that is not Raspberry (the lib is missing nevertheless)")
 
-import car
-
+from car import Car
 
 # Provide some diagnostics
 def main():
