@@ -59,6 +59,7 @@ class Car:
 		try:
 			self.servo.stop_servo(self.back_pwm_bcm)
 		except RuntimeError:
+			# TODO This is a hack. RuntimeError could be thrown for a serious reason!
 			print 'RuntimeError while stoping the servo. Perhaps it wasn\'t set in the first place!'
 
 	# Steer the front wheels to the left
