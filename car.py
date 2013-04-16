@@ -22,10 +22,12 @@ class Car:
 		self.back_dir  = 16   # pin used to control back motor direction (forward/backward)		
 		self.configure()
 
-	# Configure gpio pins as output
+	# Configure gpio pins as output and set D2 pin to high, along with
+	# reseting the pins to motors.
 	def configure(self):
 		setup_pins([ self.motor_d2, self.front_pwr, self.front_dir, self.back_pwm, self.back_dir ])
 		self.enable()
+		self.reset_motors()
 
 	# Disable both motors
 	def disable(self):
@@ -33,6 +35,9 @@ class Car:
 
 	def enable(self):
 		enable_pin(self.motor_d2)
+
+	def reset_motors(self):
+		disable_pins([ self.front_pwr, self.front_dir, self.back_pwm, self.back_dir ])
 
 	# Steer the front wheels to the left
 	def steer_left(self):

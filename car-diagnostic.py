@@ -32,6 +32,8 @@ def main():
 	car.go_backward()
 	time.sleep(1)
 
+	car.reset_motors()
+
 	print '.Diagnostics complete ---'
 
 # Standard boilerplate to call the main() function to begin
