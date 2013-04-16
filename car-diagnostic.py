@@ -11,6 +11,9 @@ from car import Car
 
 # Provide some diagnostics
 def main():
+	# configure gpio mode
+	gpio.setmode(gpio.BOARD)
+
 	car = Car()
 
 	print 'steer_left'
