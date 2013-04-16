@@ -16,6 +16,8 @@ def main():
 
 	car = Car()
 
+	print '.Diagnostics: motor control & powering'
+
 	print 'steer_left'
 	car.steer_left()
 	time.sleep(1)
@@ -34,7 +36,16 @@ def main():
 
 	car.reset_motors()
 
-	print '.Diagnostics complete ---'
+	print '.Diagnostics: motor servo rate'
+
+	car.set_speed(2)
+	time.sleep(1)
+
+	car.set_speed(3)
+	time.sleep(1)
+
+	car.set_speed(4)
+	time.sleep(1)
 
 # Standard boilerplate to call the main() function to begin
 # the program.

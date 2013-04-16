@@ -42,3 +42,17 @@ def setup_pins(pins_list):
 			raise gpio.InvalidChannelException("The channel sent is invalid on a Raspberry Pi: %d" % pin)
 			
 		print 'Configured output pin %d' % pin
+
+
+bcm_table = {
+   11: 17, 
+   12: 18,
+   15: 22,
+   16: 23,
+   18: 24 }
+# Convert from BOARD => BCM. Throws an exception if no mapping was found
+def convert_to_bcm(pin):
+	if (bcm_table[pin] is None)
+		# Couldn't find mapping;
+		raise Exception("Could not find a mapping for BOARD%d" % pin)
+	return bcm_table[pin]
