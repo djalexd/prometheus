@@ -52,9 +52,9 @@ class Car:
 	# Move the car forward
 	def go_forward(self):
 		enable_pin(self.back_pwm)
-		enable_pin(self.back_dir)
+		disable_pin(self.back_dir)
 
 	# Move the car backward
 	def go_backward(self):
-		disable_pin(self.back_pwm)
+		enable_pin(self.back_pwm)
 		enable_pin(self.back_dir)
