@@ -80,7 +80,7 @@ class Car:
 
 	# Just sets the rate without starting the engine.
 	def set_rate(self, attempt_rate):
-		if (self.servo_allowed_rates[attempt_rate] is None)
+		if (self.servo_allowed_rates[attempt_rate] is None):
 			raise Exception("Cannot set servo rate to %d -- unknown servo mapping" % attempt_rate)
 
 		self.servo_rate = attempt_rate
@@ -89,7 +89,7 @@ class Car:
 	# allowed_rates doesnt have a mapping.
 	def set_speed(self, attempt_rate):
 		self.set_rate(attempt_rate)
-		
+
 		r = self.servo_allowed_rates[self.servo_rate]
 		servo.set_servo(self.back_pwm_bcm, r)
 		print 'Set servo rate to %d' % r

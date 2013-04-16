@@ -52,7 +52,7 @@ bcm_table = {
    18: 24 }
 # Convert from BOARD => BCM. Throws an exception if no mapping was found
 def convert_to_bcm(pin):
-	if (bcm_table[pin] is None)
+	if (bcm_table[pin] is None):
 		# Couldn't find mapping;
 		raise Exception("Could not find a mapping for BOARD%d" % pin)
 	return bcm_table[pin]
