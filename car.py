@@ -1,5 +1,5 @@
 
-import gpioutils
+from gpioutils import *
 
 # Car class.
 class Car:
