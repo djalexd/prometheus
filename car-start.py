@@ -41,23 +41,31 @@ def main():
 
 	print 'Finished configuring Raspberry motor pins'
 
+	print 'Enable D2 motor pin'
+	enable(motor_d2)
+
 	# main loop -- we just handle input.
 	while True:
-		ch = getch()
+		ch = getch.getch()
 		if str == 'a':
-			print 'going right'
+			enable(front_pwr)
+			enable(front_dir)
 		elif str == 'd':
-			print 'going left'
+			enable(front_pwr)
+			disable(front_dir)
 		elif str == 'w':
-			print 'forward!'
+			enable(back_pwm)
+			disable(back_dir)
 		elif str == 's':
-			print 'brake..'
+			enable(back_pwm)
+			enable(back_dir)
 		else:
 			# reset all values (both pwm and dir)
-			print 'reseting everything'
+			for pin in pins_list:
+				disable(pin)
 
-		# sleeping for 1s ... hmm that's long
-		time.sleep(1)
+		# sleeping a while
+		time.sleep(0.05)
 
 
 # Standard boilerplate to call the main() function to begin
