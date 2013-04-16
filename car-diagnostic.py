@@ -47,6 +47,9 @@ def main():
 	car.set_speed(4)
 	time.sleep(1)
 
+	# Finally reset the motors again.
+	car.reset_motors()
+
 # Standard boilerplate to call the main() function to begin
 # the program.
 if __name__ == '__main__':

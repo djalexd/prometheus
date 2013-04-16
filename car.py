@@ -56,7 +56,10 @@ class Car:
 	def reset_motors(self):
 		disable_pins([ self.front_pwr, self.front_dir, self.back_dir ])
 		# Disable servo DMA channel
-		self.servo.stop_servo(self.back_pwm_bcm)
+		try:
+			self.servo.stop_servo(self.back_pwm_bcm)
+		except RuntimeError:
+			print 'RuntimeError while stoping the servo. Perhaps it wasn\'t set in the first place!'
 
 	# Steer the front wheels to the left
 	def steer_left(self):
