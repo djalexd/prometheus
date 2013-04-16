@@ -56,7 +56,7 @@ class Car:
 	def reset_motors(self):
 		disable_pins([ self.front_pwr, self.front_dir, self.back_dir ])
 		# Disable servo DMA channel
-		servo.stop_servo(self.back_pwm_bcm)
+		self.servo.stop_servo(self.back_pwm_bcm)
 
 	# Steer the front wheels to the left
 	def steer_left(self):
@@ -91,5 +91,5 @@ class Car:
 		self.set_rate(attempt_rate)
 
 		r = self.servo_allowed_rates[self.servo_rate]
-		servo.set_servo(self.back_pwm_bcm, r)
+		self.servo.set_servo(self.back_pwm_bcm, r)
 		print 'Set servo rate to %d' % r
