@@ -2,7 +2,7 @@
 from gpioutils import *
 # we use RPIO library to emulate a pwm. This can be done on any port
 # but we'll use the hardware one (not sure if this makes any difference);
-import RPIO
+from RPIO import PWM
 
 # Car class.
 class Car:
@@ -19,7 +19,7 @@ class Car:
 	is_started = False
 
 	# Used to drive the engine.
-	servo = RPIO.PWM.Servo()
+	servo = PWM.Servo()
 
 	# Default pins
 	# Override the default settings

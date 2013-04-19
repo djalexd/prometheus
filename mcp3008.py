@@ -10,3 +10,15 @@ def readadc(adcnum):
 	r = spi.xfer2([1,(8+adcnum)<<4,0])
 	adcout = ((r[1]&3) << 8) + r[2]
 	return adcout
+
+
+# "readers.py"
+# class ReadFromMCP3308:
+# 	import spidev
+# 	// .....
+
+# "car.py"
+# import from readers
+# class Car:
+# 	def __init__(self, reader):
+# 		self.reader = reader
