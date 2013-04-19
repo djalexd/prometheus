@@ -1,16 +1,16 @@
 
 # gpio is strict import here.
-import RPi.GPIO as gpio
+from RPi import GPIO
 
 # Utility methods for gpio.
 
 # Enable a preconfigured pin. 
 def enable_pin(pin):
-	gpio.output(pin, gpio.HIGH)
+	GPIO.output(pin, GPIO.HIGH)
 
 # Disable a preconfigured pin.
 def disable_pin(pin):
-	gpio.output(pin, gpio.LOW)
+	GPIO.output(pin, GPIO.LOW)
 
 # Enable a list of pins.
 def enable_pins(pins_list):
@@ -36,10 +36,10 @@ def setup_pins(pins_list):
 	# configure pins - all are output
 	for pin in pins_list:
 		try:
-			gpio.setup(pin, gpio.OUT)
-		except gpio.InvalidChannelException:
+			GPIO.setup(pin, GPIO.OUT)
+		except GPIO.InvalidChannelException:
 			# We throw a more detailed error.
-			raise gpio.InvalidChannelException("The channel sent is invalid on a Raspberry Pi: %d" % pin)
+			raise GPIO.InvalidChannelException("The channel sent is invalid on a Raspberry Pi: %d" % pin)
 			
 		print 'Configured output pin %d' % pin
 

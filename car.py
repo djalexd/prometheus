@@ -2,7 +2,7 @@
 from gpioutils import *
 # we use RPIO library to emulate a pwm. This can be done on any port
 # but we'll use the hardware one (not sure if this makes any difference);
-from RPIO import PWM
+import RPIO
 
 # Car class.
 class Car:
@@ -16,8 +16,10 @@ class Car:
 		4 : 10000
 	}
 
+	is_started = False
+
 	# Used to drive the engine.
-	servo = PWM.Servo()
+	servo = RPIO.PWM.Servo()
 
 	# Default pins
 	# Override the default settings
@@ -57,10 +59,31 @@ class Car:
 		disable_pins([ self.front_pwr, self.front_dir, self.back_dir ])
 		# Disable servo DMA channel
 		try:
+			self.is_started = False
 			self.servo.stop_servo(self.back_pwm_bcm)
 		except RuntimeError:
 			# TODO This is a hack. RuntimeError could be thrown for a serious reason!
 			print 'RuntimeError while stoping the servo. Perhaps it wasn\'t set in the first place!'
+
+
+	# Stop the car (back wheel). This method will also reset front wheel
+	def stop(self):
+		self.reset_motors()
+
+	# Start the car. This will reset front wheels to move forward
+	def start(self):
+		if self.is_started:
+			print 'Car already started; call to start() will be ignored'
+		else:
+			self.steer_none()
+			self.set_rate(2)
+			self.go_forward()
+			self.is_started = True
+
+	# Reset the front wheels to go forward
+	def steer_none(self):
+		disable_pins([ self.front_pwr, self.front_dir ])
+
 
 	# Steer the front wheels to the left
 	def steer_left(self):
@@ -76,11 +99,13 @@ class Car:
 	def go_forward(self):
 		self.set_speed(self.servo_rate)
 		disable_pin(self.back_dir)
+		self.is_started = True
 
 	# Move the car backward
 	def go_backward(self):
 		self.set_speed(self.servo_rate)
 		enable_pin(self.back_dir)
+		self.is_started = True
 
 	# Just sets the rate without starting the engine.
 	def set_rate(self, attempt_rate):
@@ -96,4 +121,5 @@ class Car:
 
 		r = self.servo_allowed_rates[self.servo_rate]
 		self.servo.set_servo(self.back_pwm_bcm, r)
+		self.is_started = True
 		print 'Set servo rate to %d' % r
