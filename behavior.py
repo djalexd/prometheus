@@ -1,4 +1,5 @@
-from car import Car
+""" No need to import any specific car class.  """
+
 
 class StartStopBehavior:
 	""" A simple start / stop behavior. Below the min_distance, the car will simply stop. """

@@ -22,13 +22,10 @@ with patch.dict('sys.modules', {'RPIO': mock, 'RPi': mock, 'spidev': mock}):
 		def set_speed(self, v):
 			""" Mock for Car::set_speed """
 
-
-
 	class StartStopBehaviorTest(unittest.TestCase):
 
 		# Use a mocked car.
 		def setUp(self):
-
 			_car = StubCar()
 			_car = MagicMock()
 			self.car = _car
@@ -94,16 +91,3 @@ with patch.dict('sys.modules', {'RPIO': mock, 'RPi': mock, 'spidev': mock}):
 		#	self.behavior.do_react(15, self.car)
 			# start
 		#	assert self.car.start.called
-
-
-	# # Bootstrap for main
-	# if __name__ == '__main__':
-	# 	# Mock hardware python bindings.
-	# 	mock = Mock()
-	# 	with patch.dict('sys.modules', {'RPIO': mock, 'RPi': mock, 'spidev': mock}):
-	# 		import behavior
-	# 		import car
-
-	# 		suite1 = unittest.TestLoader().loadTestsFromTestCase(StartStopBehaviorTest)
-	# 		suite2 = unittest.TestLoader().loadTestsFromTestCase(SteerBehaviorTest)
-	# 		unittest.TextTestRunner(verbosity=2).run(unittest.TestSuite([suite1, suite2]))
