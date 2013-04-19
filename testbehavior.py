@@ -83,11 +83,3 @@ with patch.dict('sys.modules', {'RPIO': mock, 'RPi': mock, 'spidev': mock}):
 			self.behavior.do_react(5, self.car)
 			# assert
 			assert self.car.steer_left.called
-
-		#def test_stop_then_start(self):
-			# when
-		#	self.behavior.do_react(5, self.car)
-			# then -- simulate the distance again.
-		#	self.behavior.do_react(15, self.car)
-			# start
-		#	assert self.car.start.called

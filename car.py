@@ -123,3 +123,6 @@ class Car:
 		self.servo.set_servo(self.back_pwm_bcm, r)
 		self.is_started = True
 		print 'Set servo rate to %d' % r
+
+	def update_after_time(elapsed):
+		""" Nothing here. This is a hardware car that doesn't need any special handling """
