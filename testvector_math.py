@@ -39,3 +39,11 @@ class Vector2dTests(unittest.TestCase):
 		# then
 		#assert
 		assert v1.distance_to(v2) == float('inf')
+
+	def test_intersects_between_2_vectors(self):
+		# when
+		v1 = Vector2d(Point2d(20, 20), Point2d(10000020, 20))
+		v2 = Vector2d(Point2d(400, 0), Point2d(400, 400))
+		# then
+		# assert
+		assert v1.intersects_with(v2) is True

@@ -37,6 +37,8 @@ class SimulationCar:
 	""" 
 		Create a simple car that mimics a physical environment.
 	"""
+	mult = 4
+
 	def __init__(self, file):
 
 		f1 = open(file)
@@ -44,6 +46,7 @@ class SimulationCar:
 
 		self.dimension = _json["dimension"]
 		self.steer_angle = _json["steer_angle"]
+		self._inv_tan_steer_angle = math.tan(self.steer_angle)
 		self.reset_motors()
 
 		f1.close()
@@ -63,7 +66,7 @@ class SimulationCar:
 
 	def start(self):
 		self.angle = 0
-		self.v = 2
+		self.v = 2 * self.mult
 
 	def steer_none(self):
 		logging.debug('steer_none')
@@ -78,13 +81,13 @@ class SimulationCar:
 		self.angle = self.steer_angle
 
 	def go_forward(self):
-		self.v = 2
+		self.v = 2 * self.mult
 
 	def go_backward(self):
-		self.v = -2
+		self.v = -2 * self.mult
 
 	def set_rate(self, attempt_rate):
-		self.v = attempt_rate
+		self.v = attempt_rate * self.mult
 
 	def set_speed(self, attempt_rate):
 		self.set_rate(attempt_rate)
@@ -95,10 +98,13 @@ class SimulationCar:
 		self.position.add(dp)
 
 		# Only update angle if necessary
-		if not self.angle == 0:
-			A = (self.v * elapsed)**2
-			R = (self.dimension / math.tan(self.steer_angle))**2
-			self.direction_angle += math.acos( 0.5 * (1 - (A/R)) ) 
+		A = (self.v * elapsed)**2
+		R = (self.dimension * self._inv_tan_steer_angle)**2
+		if self.angle > 0:
+			self.direction_angle += math.acos( (1 - 0.5 * A / R ) ) 
+		elif self.angle < 0:
+			self.direction_angle -= math.acos( (1 - 0.5 * A / R ) ) 
+
 
 		logging.debug("%s - angle = %s, " % (self.position, self.direction_angle) )
 
@@ -118,13 +124,14 @@ class SimulationSensor:
 		ex = self.car.position.x + ray_length * math.cos(self.car.direction_angle)
 		ey = self.car.position.y + ray_length * math.sin(self.car.direction_angle)
 		ahead_v = Vector2d(self.car.position, Point2d(ex, ey))
-		#print 'Ahead vector %s' % ahead_v
+		logging.debug('Ahead vector %s' % ahead_v)
 
 		# lambda function used to filter
 		def is_wall_ahead(x): return not math.isinf(ahead_v.distance_to(x))
 
 		# Get only the walls that are ahead
 		candidate_walls = filter(is_wall_ahead, self.environment.walls)
+		logging.debug('Selected %s Candidates from %s' % (str(candidate_walls), str(self.environment.walls)) )
 
 		# map them to an array of distances
 		def df(x): return ahead_v.distance_to(x)

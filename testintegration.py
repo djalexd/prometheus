@@ -9,7 +9,7 @@ from environment import *
 from behavior import *
 
 import logging
-logging.basicConfig(format='%(asctime)s %(levelname)s: %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.DEBUG)
+logging.basicConfig(format='%(asctime)s %(levelname)s: %(message)s', filename='example.log', datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.DEBUG)
 
 # mock = Mock()
 # with patch.dict('sys.modules', {'RPIO': mock, 'RPi': mock, 'spidev': mock}):
@@ -27,4 +27,4 @@ class SimpleEnvironmentsTest(unittest.TestCase):
 		brain = CarBrain(_c, _s, SteerForDurationBehavior())
 		# then -- we don't do anything
 		# assert -- let's pause this thread for 1 minute
-		time.sleep(1)
+		time.sleep(120)

@@ -1,8 +1,10 @@
 """ Utilities to work with 2d environments """
 import math
+from numpy import *
+import logging
 
 # For floating point operations, we need a FP margin
-epsilon = 0.0001
+epsilon = 0.0000001
 
 
 class Point2d:
@@ -36,10 +38,6 @@ class Vector2d:
 		self.start = start
 		self.end = end
 
-	# def __init__(self, start, direction, length):
-	# 	self.start = start
-	# 	self.end = Point2d(start.x + direction.x * length, start.y + direction.y * length)
-
 	def length(self):
 		return self.start.distanceTo(self.end)
 
@@ -59,7 +57,6 @@ class Vector2d:
 			return float('inf')
 
 		(l1, l2) = self._compute_segments(other)
-
 		return self.length() * l1
 
 	#def intersection_point(self, other):
@@ -78,15 +75,21 @@ class Vector2d:
 			intersection result (true / false). 
 		"""
 		if self.is_equal_to(other):
-			return False;
+			#logging.debug('%s considered equal to %s -- intersects_with returned false' % (self, other))
+			return False
 		if self.is_parallel_with(other):
-			return False;
+			#logging.debug('%s considered in the same direction as %s -- intersects_with returned false' % (self, other))
+			return False
 
 		(l1, l2) = self._compute_segments(other)
+		#logging.debug('Computed line segments to (%s, %s)' % (l1, l2))
+
+		if l1 is None:
+			return False
 
 		# Don't count epsilon. This ensures that connected
 		# vectors are not considered as intersected;
-		return l2 >= epsilon and l2 <= 1.0 - epsilon and l1 >= epsilon and  l1 <= 1.0 - epsilon
+		return l2 >= 0 and l2 <= 1.0 and l1 >= 0 and l1 <= 1.0
 
 
 	def _compute_segments(self, other):
@@ -95,29 +98,32 @@ class Vector2d:
 
 			<b>Important</b> this method also checks for non-intersecting 
 			vectors and will return (inf, inf) in that case;
+
+			x1 + a*(x2-x1) = x3 + b*(x4-x3)
+			y1 + a*(y2-y1) = y3 + b*(y4-y3)
+
+			b * [ (x4-x3)*(y2-y1) - (y4-y3)*(x2-x1) ] = (y3-y1)*(x2-x1) - (x3-x1)*(y2-y1) => b
+			a = [ (x3-x1) + b * (x4-x3) ] / (x2-x1) => a
 		"""
 
-		ax = self.start.x
-		ay = self.start.y
+		(x1, y1) = (self.start.x, self.start.y)
+		(x2, y2) = (self.end.x, self.end.y)
+		(x3, y3) = (other.start.x, other.start.y)
+		(x4, y4) = (other.end.x, other.end.y)
 
-		bx = self.end.x
-		by = self.end.y
+		_D = (x4-x3)*(y2-y1) - (y4-y3)*(x2-x1)
+		if math.fabs(_D) < epsilon:
+			# parallel lines, cannot intersect
+			return (None, None)
 
-		cx = other.start.x
-		cy = other.start.y
+			# This could also mean lines are co-linear.
 
-		dx = other.end.x
-		dy = other.end.y
-
-		_A = (bx - cx)*(cy - ay) - (cx - ax)*(by - ay)
-		_B = (dx - cx)*(by - ay) - (bx - ax)*(dy - cy)
-
-		# B is so low we can consider it zero. In that case, l1 and l2 are infinite
-		if math.fabs(_B) < epsilon:
-			l1 = float('inf')
-			l2 = float('inf')
 		else:
-			l2 = _A / _B
-			l1 = ( (cx - ax) + l2 * (dx - cx) ) / (bx - ax)
+			b = ((y3-y1)*(x2-x1) - (x3-x1)*(y2-y1)) / _D
 
-		return (l1, l2)
+			if math.fabs(x2 - x1) < epsilon:
+				a = ( (y3-y1) + b*(y4-y3) ) / (y3-y1)
+			else:
+				a = ( (x3-x1) + b*(x4-x3) ) / (x2-x1)
+
+			return (a, b)

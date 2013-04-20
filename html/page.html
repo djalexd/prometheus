@@ -1,0 +1,48 @@
+<html>
+	<head>
+	</head>
+
+	<body>
+
+		<div>
+			<input type="button" id="start" value="Start">
+			<input type="button" class="stop" value="Stop">
+		</div>
+
+		<div>
+			<input type="button" id="left" value="Left">
+			<input type="button" class="none" value="None">
+			<input type="button" class="right" value="Right">
+		</div>
+
+		<script type="text/javascript" src="jquery-2.0.0.js"></script>
+
+		<script type="text/javascript">
+			// Just wire the buttons to send ajax requests
+			$(document).ready(function() {
+				// Successful. TODO Add a simple bottom notification system
+
+				$("#start").click(function() {
+					$.get('/start', function(m) { });
+				});
+
+				$("#stop").click(function() {
+					$.get('/stop', function(m) { });
+				});
+
+				$("#left").click(function() {
+					$.get('/left', function(m) { });
+				});
+
+				$("#right").click(function() {
+					$.get('/right', function(m) { });
+				});
+
+				$("#none").click(function() {
+					$.get('/none', function(m) { });
+				});
+
+			});
+		</script>
+	<body>
+</html>
