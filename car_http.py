@@ -4,11 +4,12 @@ from BaseHTTPServer import BaseHTTPRequestHandler,HTTPServer
 from os import curdir, sep
 import cgi
 import car
+from RPi import GPIO
 
 PORT_NUMBER = 17005
 
 # configure gpio mode
-gpio.setmode(gpio.BOARD)
+GPIO.setmode(GPIO.BOARD)
 _car = car.Car()
 
 #This class will handles any incoming request from
