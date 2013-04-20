@@ -7,6 +7,8 @@ import car
 
 PORT_NUMBER = 17005
 
+# configure gpio mode
+gpio.setmode(gpio.BOARD)
 _car = car.Car()
 
 #This class will handles any incoming request from
