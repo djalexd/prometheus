@@ -39,6 +39,12 @@ class myHandler(BaseHTTPRequestHandler):
 				_car.steer_left()
 			elif self.path == '/none':
 				_car.steer_none()
+			elif self.path == '/speed2':
+				_car.set_speed(2)
+			elif self.path == '/speed3':
+				_car.set_speed(3)
+			elif self.path == '/speed4':
+				_car.set_speed(4)
 
 			self.send_response(200)
 			self.wfile.write('Command ok')
