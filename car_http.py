@@ -29,15 +29,15 @@ class myHandler(BaseHTTPRequestHandler):
 		else:
 
 			# These are HTTP GET requests that act on the car.
-			if self.path == 'start':
+			if self.path == '/start':
 				_car.start()
-			elif self.path == 'stop':
+			elif self.path == '/stop':
 				_car.stop()
-			elif self.path == 'right':
+			elif self.path == '/right':
 				_car.steer_right()
-			elif self.path == 'left':
+			elif self.path == '/left':
 				_car.steer_left()
-			elif self.path == 'none':
+			elif self.path == '/none':
 				_car.steer_none()
 
 			self.send_response(200)
