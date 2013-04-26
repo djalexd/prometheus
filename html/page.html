@@ -1,27 +1,74 @@
 <html>
 	<head>
+		<title>Prometheus control center</title>
+		<link rel="stylesheet" media="screen" href="bootstrap/css/bootstrap.css">
+		<link rel="stylesheet" media="screen" href="main.css">
 	</head>
 
 	<body>
 
-		<div>
-			<input type="button" id="start" value="Start">
-			<input type="button" id="stop" value="Stop">
-		</div>
+		<div class="accordion" id="manualAutoAccordion">
+			<div class="accordion-group">
+    			<div class="accordion-heading">
+      				<a class="accordion-toggle" 
+      				   data-toggle="collapse" 
+      				   data-parent="#manualAutoAccordion" 
+      				   href="#collapse1">
 
-		<div>
-			<input type="button" id="left" value="Left">
-			<input type="button" id="none" value="None">
-			<input type="button" id="right" value="Right">
-		</div>
+        			Manual controls
+      				</a>
+    			</div>
 
-		<div>
-			<input type="button" id="speed2" value="Speed 2">
-			<input type="button" id="speed3" value="Speed 3">
-			<input type="button" id="speed4" value="Speed 4">
-		</div>
+    			<div id="collapse1" class="accordion-body collapse in">
+      				<div class="accordion-inner">
+
+						<div class="row">
+							<div class="centered">
+								<div class="span1 btn btn-primary" id="start">Start</div>
+								<div class="span1 btn btn-danger" id="start">Stop</div>		
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="btn-group" data-toggle="buttons-radio">
+								<div class="btn btn-large" id="left">Left</div>
+								<div class="btn btn-large" id="none">None</div>
+								<div class="btn btn-large" id="right">Right</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="btn-group" data-toggle="buttons-radio">
+								<div class="btn btn-primary" id="speed2">Speed 2</div>
+								<div class="btn btn-primary" id="speed3">Speed 3</div>
+								<div class="btn btn-inverse" id="speed4">Speed 4</div>
+							</div>
+						</div>
+      				</div>
+    			</div>
+			</div>
+
+			<div class="accordion-group">
+    			<div class="accordion-heading">
+      				<a class="accordion-toggle" 
+      				   data-toggle="collapse" 
+      				   data-parent="#manualAutoAccordion" 
+      				   href="#collapse2">
+
+        			Let Pi take control!
+      				</a>
+    			</div>
+
+    			<div id="collapse2" class="accordion-body collapse in">
+      				<div class="accordion-inner">
+      					Raspbery will take good care of <strong>your car</strong>
+      				</div>
+      			</div>
+      		</div>
+      	</div>
 
 		<script type="text/javascript" src="jquery-2.0.0.js"></script>
+		<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
 
 		<script type="text/javascript">
 			// Just wire the buttons to send ajax requests
