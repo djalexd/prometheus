@@ -15,7 +15,7 @@ class Point2d:
 	def distanceTo(self, other):
 		dx = self.x - other.x
 		dy = self.y - other.y
-		return math.sqrt(dx * dx + dy * dy)
+		return math.sqrt(dx**2 + dy**2)
 
 	# fluent
 	def add(self, other):
@@ -31,6 +31,10 @@ class Point2d:
 	def __str__(self):
 		return "(%f,%f)" % (self.x, self.y)
 
+	def __eq__(self, other):
+		return (isinstance(other, self.__class__) and self.is_equal_to(other))
+
+
 
 class Vector2d:
 
@@ -43,16 +47,28 @@ class Vector2d:
 
 	def direction(self):
 		inv_len = 1.0 / self.length()
-		return Point2d( (self.end.x - self.start.x) / inv_len, (self.end.y - self.start.y) / inv_len )
+		return Point2d( (self.end.x - self.start.x) * inv_len, (self.end.y - self.start.y) * inv_len )
 
 	def is_equal_to(self, other):
 		""" Checks equality between 2 vectors; uses epsilon for edge cases """
 		return self.start.is_equal_to(other.start) and self.end.is_equal_to(other.end)
 
 	def is_parallel_with(self, other):
+		""" TODO Optimize. """
 		return self.direction().is_equal_to(other.direction())
 
 	def distance_to(self, other):
+		""" Computes the distance from self.start (the starting point 
+			of first segment) to the intersection with another segment.
+
+			If segments don't intersect, returns 'inf'
+
+			If one segment ends in other segment's start point, return
+			the whole length of first segment.
+		"""
+		if self.end == other.start:
+			return self.length()
+
 		if not self.intersects_with(other):
 			return float('inf')
 
@@ -65,8 +81,12 @@ class Vector2d:
 		return "%s => %s" % (self.start, self.end)
 
 	def __repr__(self):
-		return self.__str__()		
+		return self.__str__()
 
+	def __eq__(self, other):
+		return (isinstance(other, self.__class__) 
+			and self.start.__eq__(other.start) 
+			and self.end.__eq__(other.end));
 
 	def intersects_with(self, other):
 		""" Checks that 2 vectors intersect at some point. 
@@ -75,18 +95,13 @@ class Vector2d:
 			intersection result (true / false). 
 		"""
 		if self.is_equal_to(other):
-			#logging.debug('%s considered equal to %s -- intersects_with returned false' % (self, other))
 			return False
 		if self.is_parallel_with(other):
-			#logging.debug('%s considered in the same direction as %s -- intersects_with returned false' % (self, other))
 			return False
 
 		(l1, l2) = self._compute_segments(other)
-		#logging.debug('Computed line segments to (%s, %s)' % (l1, l2))
-
 		if l1 is None:
 			return False
-
 		# Don't count epsilon. This ensures that connected
 		# vectors are not considered as intersected;
 		return l2 >= 0 and l2 <= 1.0 and l1 >= 0 and l1 <= 1.0
@@ -122,8 +137,8 @@ class Vector2d:
 			b = ((y3-y1)*(x2-x1) - (x3-x1)*(y2-y1)) / _D
 
 			if math.fabs(x2 - x1) < epsilon:
-				a = ( (y3-y1) + b*(y4-y3) ) / (y3-y1)
+				a = float( (y3-y1) + b*(y4-y3) ) / (y3-y1)
 			else:
-				a = ( (x3-x1) + b*(x4-x3) ) / (x2-x1)
+				a = float( (x3-x1) + b*(x4-x3) ) / (x2-x1)
 
 			return (a, b)

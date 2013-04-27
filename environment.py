@@ -124,7 +124,6 @@ class SimulationSensor:
 		ex = self.car.position.x + ray_length * math.cos(self.car.direction_angle)
 		ey = self.car.position.y + ray_length * math.sin(self.car.direction_angle)
 		ahead_v = Vector2d(self.car.position, Point2d(ex, ey))
-		logging.debug('Ahead vector %s' % ahead_v)
 
 		# lambda function used to filter
 		def is_wall_ahead(x): return not math.isinf(ahead_v.distance_to(x))
